@@ -5,11 +5,60 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Toán 5 — Luyện theo tuần (Trợ lý AI)</title>
 <style>
-  :root{
-    --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --glass: rgba(255,255,255,0.04);
+    :root{
+  --bg1: #e3f2fd;         /* xanh nhạt */
+  --bg2: #bbdefb;         /* xanh lam nhạt */
+  --card: #ffffffcc;       /* trắng trong suốt nhẹ */
+  --accent: #0288d1;       /* xanh lam đậm */
+  --muted: #455a64;        /* xám chữ phụ */
+  --glass: rgba(255,255,255,0.6);
   }
-  html,body{height:100%; margin:0; font-family:Inter, "Segoe UI", Roboto, Arial; background:
-    linear-gradient(180deg,#071028 0%, #091726 60%); color:#e6eef6;}
+  html,body {
+  height:100%;
+  margin:0;
+  font-family: "Inter", "Segoe UI", Roboto, Arial;
+  background:
+    radial-gradient(circle at 10% 20%, var(--bg1), var(--bg2) 80%),
+    url('https://www.transparenttextures.com/patterns/pw-maze-white.png'); /* họa tiết nhẹ */
+  color:#0d1b2a;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Giữ các card nổi bật hơn trên nền sáng */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  color: #0d1b2a;
+}
+
+/* Cập nhật màu nút chính */
+button.primary {
+  background: linear-gradient(90deg, var(--accent), #42a5f5);
+  color: #fff;
+  font-weight:600;
+  border:none;
+  box-shadow: 0 2px 6px rgba(2,136,209,0.4);
+}
+
+button.primary:hover {
+  filter: brightness(1.1);
+}
+
+/* Câu hỏi và lựa chọn nổi rõ trên nền sáng */
+.question {
+  background: #f5f9ff;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.choice {
+  background: #fff;
+  color: #333;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.choice.selected {outline: 2px solid rgba(2,136,209,0.3);}
+.correct {background-color:#4CAF50!important; color:#fff;}
+.incorrect {background-color:#f44336!important; color:#fff;}
   .container{max-width:1200px; margin:28px auto; padding:20px; display:grid; grid-template-columns: 1fr 360px; gap:20px;}
   header{grid-column:1/3; display:flex; justify-content:space-between; align-items:center; gap:16px;}
   h1{margin:0; font-size:20px; letter-spacing:0.2px;}
@@ -78,6 +127,52 @@
   .option-btn:hover {
     background-color: #333;
   }
+/* ==== Số thứ tự câu hỏi: nền vàng nhạt, số đỏ ==== */
+.q-left {
+  min-width: 44px;
+  background: #fff8e1;        /* vàng nhạt dịu mắt */
+  color: #d32f2f;             /* đỏ tươi */
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ==== Làm sáng các đáp án lựa chọn ==== */
+.choice {
+  background: #f0f0f0;         /* xám nhạt */
+  color: #222;                 /* chữ đậm */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Khi rê chuột vào đáp án */
+.choice:hover {
+  background: #e0e0e0;
+  border-color: #bbb;
+}
+
+/* Khi học sinh chọn */
+.choice.selected {
+  outline: 2px solid rgba(2,136,209,0.4);
+  background: #e3f2fd;
+  color: #01579b;
+}
+
+/* Khi đúng – sai */
+.choice.correct {
+  background-color: #4CAF50 !important;
+  color: #fff;
+}
+.choice.incorrect {
+  background-color: #f44336 !important;
+  color: #fff;
+}
 
   /* Khi học sinh chọn */
   .selected {
@@ -98,7 +193,134 @@
     background-color: #f44336 !important; /* đỏ */
     color: #fff;
   }
-  
+  /* ===== HIỆU ỨNG NỀN ĐỘNG NHẸ ===== */
+html, body {
+  background: linear-gradient(120deg, #e3f2fd, #bbdefb, #e3f2fd);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== CARD NỔI NHẸ ===== */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* ===== NÚT ĐỘNG ===== */
+button.primary {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.3s ease;
+}
+button.primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(2,136,209,0.4);
+  filter: brightness(1.1);
+}
+
+/* ===== SỐ CÂU HỎI RUNG NHẸ ===== */
+.q-left {
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+/* === Nút chatbox (bản nâng cao) === */
+#sendChat {
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  color: #012;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+}
+#sendChat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Hai nút voice và clear */
+#voiceBtn, #clearChat {
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 10px;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* 🎤 Voice button - bình thường và khi bấm */
+#voiceBtn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff9c4; /* vàng nhạt nhẹ */
+}
+#voiceBtn:hover {
+  background: rgba(255, 255, 200, 0.25);
+  color: #fff;
+}
+/* Khi đang ghi âm (active) → vàng nổi */
+#voiceBtn.active {
+  background: #ffeb3b;
+  color: #333;
+  box-shadow: 0 0 10px 2px rgba(255, 235, 59, 0.6);
+}
+
+/* 🗑 Clear button - sáng hơn */
+#clearChat {
+  background: rgba(255,255,255,0.25);
+  color: #f1f5f9;
+}
+#clearChat:hover {
+  background: rgba(255,255,255,0.4);
+  color: #fff;
+}
+
+/* Hiệu ứng bấm giữ */
+#voiceBtn:active, #clearChat:active, #sendChat:active {
+  transform: scale(0.96);
+}
+/* 🎤 Voice button – màu vàng nhạt nổi rõ */
+#voiceBtn {
+  background: #fff8e1;        /* vàng nhạt sáng hơn */
+  color: #d17f00;             /* chữ vàng cam đậm */
+  border: 1px solid #fdd835;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+#voiceBtn:hover {
+  background: #ffecb3;
+  color: #a15f00;
+}
+
+/* Khi đang ghi âm (active) → vàng nổi bật hơn */
+#voiceBtn.active {
+  background: #ffeb3b;
+  color: #333;
+  box-shadow: 0 0 10px 2px rgba(255, 235, 59, 0.6);
+}
+
+/* 🗑 Clear button – màu xám nhạt */
+#clearChat {
+  background: #eceff1;        /* xám nhạt rõ ràng */
+  color: #37474f;             /* chữ xám đậm */
+  border: 1px solid #cfd8dc;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+#clearChat:hover {
+  background: #cfd8dc;
+  color: #000;
+}
 </style>
 </head>
 <body>
@@ -144,7 +366,7 @@
         <button id="resetBtn" title="Xóa kết quả hiện tại">⟲ Reset</button>
       </div>
 
-      <div id="info" class="small">Chọn tuần và nhấn "Tạo bài tập tuần" để làm 8 câu trắc nghiệm</div>
+      <div id="info" class="small">Chọn tuần và nhấn "Tạo bài tập tuần" để làm 10 câu trắc nghiệm</div>
 
       <div class="question-list" id="qList"></div>
 
@@ -166,7 +388,7 @@
         </div>
         <div class="assistant-meta">
           <div class="name">Trợ lý Toán 5</div>
-          <div class="desc">Bạn ơi không hiểu, hỏi mình ngay nhé! </div>
+          <div class="desc">Bạn ơi không hiểu, hỏi mình ngay nhé!</div>
         </div>
       </div>
 
@@ -178,70 +400,147 @@
 
         <div id="chatWindow" class="chat-window" aria-live="polite"></div>
 
-        <div class="chat-input">
-          <textarea id="chatText" class="chat-text" placeholder="Học sinh hỏi: 'Làm sao để tìm diện tích hình chữ nhật?'"></textarea>
-          <div style="display:flex; flex-direction:column;">
-            <button id="sendChat" class="primary">Gửi</button>
-            <button id="clearChat" style="margin-top:6px;">Xóa</button>
-          </div>
-        </div>
+      <div class="chat-input">
+  <textarea id="chatText" class="chat-text" placeholder="Học sinh hỏi: 'Làm sao để tìm diện tích hình chữ nhật?'"></textarea>
+  
+  <div style="display:flex; flex-direction:column; gap:8px; align-items:stretch;">
+    <!-- Hàng 1: nút GỬI -->
+    <button id="sendChat" class="primary" style="font-size:16px; padding:10px;">Gửi 💬</button>
+    
+    <!-- Hàng 2: nút Voice + Xóa -->
+    <div style="display:flex; gap:8px; justify-content:center;">
+      <button id="voiceBtn" title="Nói để nhập" style="flex:1;">🎤 Nói</button>
+      <button id="clearChat" title="Xóa khung chat" style="flex:1;">🗑 Xóa</button>
+    </div>
+    
+    <div class="small" id="voiceStatus"></div>
+  </div>
+</div>
+
 
 
 <script>
 /* --- Question bank: tuần 1..5 (mẫu theo chương trình Toán 5) --- */
 const templates = {
+  /* ===== TUẦN 1: Ôn tập số tự nhiên và các phép tính ===== */
   week1: [
-    { text: "Tính: 456 + 329 = ?", options: ["785","775","795","781"], correct: 0 },
-    { text: "Tính: 902 - 478 = ?", options: ["424","434","452","412"], correct: 0 },
-    { text: "Một hình chữ nhật có chiều dài 12 cm, chiều rộng 5 cm. Chu vi là?", options:["34 cm","24 cm","60 cm","17 cm"], correct: 0 },
-    { text: "Tìm x: x × 6 = 54 => x = ?", options:["7","8","9","6"], correct: 2 },
-    { text: "Viết số 7 trăm linh 5: ?", options:["705","750","7005","075"], correct: 0 },
-    { text: "Số nào chia hết cho 3: 128, 135, 147?", options:["128","135","147","Không có"], correct: 2 },
-    { text: "Sắp xếp theo thứ tự tăng dần: 45, 9, 123, 78", options:["9, 45, 78, 123","45,9,78,123","9,78,45,123","123,78,45,9"], correct: 0 },
-    { text: "Chuyển 3 mét 40 cm = ? cm", options:["340 cm","304 cm","34 cm","3.4 cm"], correct: 0 }
+    { text: "Giá trị của chữ số 5 trong số 45 382 là:", options:["5 nghìn","5 trăm","5 chục","5 đơn vị"], correct: 0 },
+    { text: "Sêu biểu thức: 300 + 120 × 2 =", options:["540","840","420","760"], correct: 0 },
+    { text: "Số? ...... + 3 = 21", options:["18","24","17","19"], correct: 0 },
+    { text: "Số? ...... - 7 = 25", options:["32","27","18","30"], correct: 0 },
+    { text: "Số? ...... × 6 = 54", options:["9","8","7","6"], correct: 0 },
+    { text: "Số? ...... ÷ 5 = 9", options:["45","14","25","15"], correct: 0 },
+    { text: "Tổng 345 và 678 là:", options:["1023","1013","1033","1020"], correct: 0 },
+    { text: "Hiệu 902 và 478 là:", options:["424","434","452","412"], correct: 0 },
+    { text: "Kết quả của phép tính 125 × 4 =", options:["500","425","450","400"], correct: 0 },
+    { text: "Số nào chia hết cho 9: 135, 144, 152?", options:["135","144","152","Không có"], correct: 0 },
+    { text: "Số? ...... + 48 = 100", options:["52","58","60","50"], correct: 0 },
+    { text: "Số? ...... × 7 = 56", options:["8","9","7","6"], correct: 0 },
+    { text: "Số tròn chục gần nhất của 467 là:", options:["470","460","400","500"], correct: 0 },
+    { text: "Sắp xếp tăng dần: 408, 480, 804, 840", options:["408, 480, 804, 840","408, 804, 480, 840","804, 840, 408, 480","480, 408, 840, 804"], correct: 0 },
+    { text: "Kết quả 4200 + 80 + 3 là:", options:["4283","4238","4823","4382"], correct: 0 },
+    { text: "Một thùng có 125 quả cam, 4 thùng có:", options:["500 quả","400 quả","450 quả","550 quả"], correct: 0 },
+    { text: "Số? ...... × 8 = 64", options:["8","7","6","9"], correct: 0 },
+    { text: "Số? ...... - 25 = 75", options:["100","90","80","95"], correct: 0 },
+    { text: "Tổng các chữ số của 3456 là:", options:["18","16","17","15"], correct: 0 },
+    { text: "Trong các số 34 509; 34 950; 34 905; số lớn nhất là:", options:["34 950","34 905","34 509","34 590"], correct: 0 }
   ],
-  week2: [
-    { text: "Tính: 234 + 567 = ?", options:["801","800","802","799"], correct: 0 },
-    { text: "Tính: 1000 - 345 = ?", options:["655","665","675","685"], correct: 1 },
-    { text: "Diện tích hình chữ nhật có chiều dài 8 cm, rộng 6 cm là?", options:["48 cm²","14 cm²","28 cm²","56 cm²"], correct: 0 },
-    { text: "Tìm x: x ÷ 5 = 9 => x = ?", options:["45","14","9","15"], correct: 0 },
-    { text: "Phân số 2/5 bằng số thập phân nào?", options:["0.25","0.4","0.5","0.2"], correct: 1 },
-    { text: "Số nào là ước của 36: 4, 7, 9?", options:["4","7","9","4 và 9"], correct: 3 },
-    { text: "Sắp xếp giảm dần: 12, 120, 3, 45", options:["120,45,12,3","45,12,3,120","3,12,45,120","120,3,45,12"], correct: 0 },
-    { text: "Một cuộn dây dài 150 cm, cắt thành 3 phần bằng nhau. Mỗi phần dài?", options:["50 cm","45 cm","60 cm","150 cm"], correct: 0 }
-  ],
-  week3: [
-    { text: "Tính: 725 + 178 = ?", options:["903","893","913","900"], correct: 0 },
-    { text: "Tính: 800 - 256 = ?", options:["544","554","534","564"], correct: 0 },
-    { text: "Số thập phân 3.5 bằng phân số nào?", options:["35/10","7/2","3 1/2","Cả hai"], correct: 3 },
-    { text: "Chu vi hình vuông cạnh 9 cm là?", options:["36 cm","18 cm","81 cm","27 cm"], correct: 0 },
-    { text: "Tìm x biết: x × 4 = 68 => x = ?", options:["17","16","18","15"], correct: 0 },
-    { text: "Phân số tối giản của 6/8 là?", options:["3/4","6/8","2/3","4/3"], correct: 0 },
-    { text: "Số 0.75 = ?", options:["3/4","75/100","0.075","Cả hai A và B"], correct: 3 },
-    { text: "Sắp xếp: 0.5, 0.75, 0.25 theo tăng dần", options:["0.25,0.5,0.75","0.5,0.25,0.75","0.75,0.5,0.25","0.25,0.75,0.5"], correct: 0 }
-  ],
-  week4: [
-    { text: "Tính: 632 + 368 = ?", options:["1000","999","1001","998"], correct: 0 },
-    { text: "Tính: 540 - 275 = ?", options:["265","255","285","260"], correct: 0 },
-    { text: "Diện tích hình chữ nhật 12 x 5 = ?", options:["60","17","120","7"], correct: 0 },
-    { text: "Một hình có chu vi 30 cm và chiều dài 8 cm, chiều rộng là?", options:["7 cm","6 cm","8 cm","9 cm"], correct: 0 },
-    { text: "Tìm số trung bình cộng của 12, 15, 21", options:["16","14","15","20"], correct: 2 },
-    { text: "Biểu thức: 5 × (3 + 2) = ?", options:["25","15","10","30"], correct: 0 },
-    { text: "Số 1/2 + 1/3 = ?", options:["5/6","2/5","3/5","1/6"], correct: 0 },
-    { text: "Sắp xếp: 14, 9, 20, 11 theo tăng dần", options:["9,11,14,20","11,9,14,20","20,14,11,9","9,14,11,20"], correct: 0 }
-  ],
-  week5: [
-    { text: "Tính: 417 + 583 = ?", options:["1000","900","1001","999"], correct: 0 },
-    { text: "Tính: 1000 - 417 = ?", options:["583","593","573","603"], correct: 0 },
-    { text: "Số phân số 3/4 = ?", options:["0.75","0.25","0.34","0.7"], correct: 0 },
-    { text: "Diện tích hình tam giác đáy 8 cm, chiều cao 5 cm = ?", options:["20 cm²","40 cm²","13 cm²","10 cm²"], correct: 0 },
-    { text: "Tìm x: x × 7 = 56 => x = ?", options:["8","7","9","6"], correct: 0 },
-    { text: "Sắp xếp: 2/3, 1/2, 3/4 theo tăng dần", options:["1/2,2/3,3/4","2/3,1/2,3/4","3/4,2/3,1/2","1/2,3/4,2/3"], correct: 0 },
-    { text: "Một hình chữ nhật dài 10 cm rộng 4 cm, chu vi = ?", options:["28 cm","40 cm","14 cm","20 cm"], correct: 0 },
-    { text: "Số thập phân 0.6 = ?", options:["3/5","6/10","0.6","Cả A và B"], correct: 3 }
-  ]
-};
 
+  /* ===== TUẦN 2: Ôn tập và bổ sung về phân số ===== */
+  week2: [
+    { text: "Phân số nào bằng 1/2?", options:["2/4","3/4","1/3","4/6"], correct: 0 },
+    { text: "Rút gọn phân số 6/8 ta được:", options:["3/4","6/8","2/3","4/3"], correct: 0 },
+    { text: "Phân số 4/5 có tử số là:", options:["4","5","9","1"], correct: 0 },
+    { text: "Phân số 4/5 có mẫu số là:", options:["5","4","9","1"], correct: 0 },
+    { text: "Phân số lớn hơn 3/5 là:", options:["4/5","2/5","1/5","3/6"], correct: 0 },
+    { text: "Phân số 10/15 rút gọn được:", options:["2/3","3/2","5/3","3/5"], correct: 0 },
+    { text: "Phân số nào bằng 0,5?", options:["1/2","2/3","3/4","1/4"], correct: 0 },
+    { text: "Phân số nào nhỏ nhất: 1/3, 1/4, 1/2?", options:["1/4","1/3","1/2","3/4"], correct: 0 },
+    { text: "Tổng 1/4 + 1/4 =", options:["1/2","1/4","2/4","3/4"], correct: 0 },
+    { text: "Hiệu 3/4 - 1/4 =", options:["1/2","2/4","3/4","1/4"], correct: 0 },
+    { text: "Phân số nào bằng 6/9?", options:["2/3","1/3","3/2","3/4"], correct: 0 },
+    { text: "Phân số tối giản của 8/12 là:", options:["2/3","3/2","4/6","1/3"], correct: 0 },
+    { text: "So sánh 2/5 và 3/5:", options:["2/5 < 3/5","2/5 = 3/5","2/5 > 3/5","Không so sánh được"], correct: 0 },
+    { text: "Phân số 5/10 và 1/2 là:", options:["Bằng nhau","5/10 lớn hơn","1/2 lớn hơn","Không so sánh được"], correct: 0 },
+    { text: "Số? ...... /3 = 2/3", options:["2","3","4","1"], correct: 0 },
+    { text: "Phân số nào lớn hơn 1?", options:["5/4","3/4","4/5","1/2"], correct: 0 },
+    { text: "Tổng 1/3 + 1/6 =", options:["1/2","2/3","1/6","1/4"], correct: 0 },
+    { text: "Hiệu 5/6 - 1/3 =", options:["1/2","2/3","3/6","4/6"], correct: 0 },
+    { text: "Phân số có tử nhỏ hơn mẫu là:", options:["3/4","4/3","5/4","2/1"], correct: 0 },
+    { text: "Phân số nào bằng 0,25?", options:["1/4","2/5","3/8","1/2"], correct: 0 }
+  ],
+
+  /* ===== TUẦN 3: Tỉ số và bài toán rút về đơn vị ===== */
+  week3: [
+    { text: "Muốn tìm giá trị 1 phần, ta làm thế nào?", options:["Chia tổng cho số phần","Nhân tổng với số phần","Cộng các phần","Trừ các phần"], correct: 0 },
+    { text: "Số? ...... phần bằng 20, vậy 1 phần bằng:", options:["4","5","10","6"], correct: 0 },
+    { text: "Nếu 1 phần là 6, 4 phần là:", options:["24","12","30","18"], correct: 0 },
+    { text: "Tỉ số của 3 và 6 là:", options:["1/2","2/3","1/3","3/6"], correct: 0 },
+    { text: "Tỉ số của 8 và 4 là:", options:["2","1/2","1","3"], correct: 0 },
+    { text: "Một lớp có 12 bạn nam và 8 bạn nữ. Tỉ số nam/nữ là:", options:["3/2","2/3","4/3","1/2"], correct: 0 },
+    { text: "Tổng 25, tỉ số 2:3. Số bé là:", options:["10","12","15","8"], correct: 0 },
+    { text: "Số? ...... : 5 = 3", options:["15","8","10","5"], correct: 0 },
+    { text: "Giá trị 1 phần khi 8 phần bằng 64 là:", options:["8","6","4","12"], correct: 0 },
+    { text: "Nếu tổng là 24 và tỉ số 2:1 thì số lớn là:", options:["16","8","12","14"], correct: 0 },
+    { text: "Số? ...... × 4 = 68", options:["17","16","18","15"], correct: 0 },
+    { text: "Tổng 2 số có tỉ số 2:3 và tổng 25, số bé là:", options:["10","12","15","8"], correct: 0 },
+    { text: "Tỉ số phần trăm của 25 và 100 là:", options:["25%","50%","75%","20%"], correct: 0 },
+    { text: "Số? ...... × 9 = 81", options:["9","8","10","7"], correct: 0 },
+    { text: "Số? ...... + 8 = 19", options:["11","9","10","12"], correct: 0 },
+    { text: "Nếu a : b = 3 : 1 thì a gấp b bao nhiêu lần?", options:["3 lần","2 lần","4 lần","1/3 lần"], correct: 0 },
+    { text: "Số? ...... : 2 = 12", options:["24","22","26","20"], correct: 0 },
+    { text: "Nếu 4 phần = 32, 7 phần bằng:", options:["56","49","63","48"], correct: 0 },
+    { text: "Số? ...... + 25 = 70", options:["45","55","65","35"], correct: 0 },
+    { text: "Tỉ số 1:4 viết dưới dạng phân số là:", options:["1/4","4/1","4/5","3/4"], correct: 0 }
+  ],
+
+  /* ===== TUẦN 4: Tìm hai số khi biết tổng, hiệu, tỉ số ===== */
+  week4: [
+    { text: "Tổng 60, tỉ số 2:3. Số lớn là:", options:["36","24","30","20"], correct: 0 },
+    { text: "Tổng 45, tỉ số 1:2. Số bé là:", options:["15","30","20","25"], correct: 0 },
+    { text: "Hiệu 15, tỉ số 2:3. Số lớn là:", options:["45","30","25","35"], correct: 0 },
+    { text: "Hiệu 20, tỉ số 2:5. Số bé là:", options:["20","30","40","50"], correct: 0 },
+    { text: "Hai số có tổng 80, tỉ số 3:5. Số bé là:", options:["30","50","48","32"], correct: 0 },
+    { text: "Tổng 72, tỉ số 1:3. Số lớn là:", options:["54","36","24","48"], correct: 0 },
+    { text: "Số? ...... + 15 = 42", options:["27","25","28","30"], correct: 0 },
+    { text: "Số? ...... - 16 = 48", options:["64","60","68","62"], correct: 0 },
+    { text: "Tổng 90, tỉ số 2:1. Số lớn là:", options:["60","45","50","30"], correct: 0 },
+    { text: "Tổng 120, tỉ số 3:5. Số bé là:", options:["45","72","48","60"], correct: 0 },
+    { text: "Hiệu 18, tỉ số 2:5. Số bé là:", options:["12","20","18","22"], correct: 0 },
+    { text: "Số? ...... × 6 = 54", options:["9","8","7","6"], correct: 0 },
+    { text: "Số? ...... ÷ 4 = 9", options:["36","32","28","40"], correct: 0 },
+    { text: "Tổng 50, tỉ số 3:2. Số lớn là:", options:["30","20","25","15"], correct: 0 },
+    { text: "Số? ...... + 8 = 23", options:["15","14","16","13"], correct: 0 },
+    { text: "Tổng 72, tỉ số 1:2. Số lớn là:", options:["48","36","24","40"], correct: 0 },
+    { text: "Hiệu 24, tỉ số 2:5. Số lớn là:", options:["60","48","40","30"], correct: 0 },
+    { text: "Số? ...... - 9 = 18", options:["27","28","26","25"], correct: 0 },
+    { text: "Tổng 60, tỉ số 3:2. Số bé là:", options:["24","30","20","36"], correct: 0 },
+    { text: "Hiệu 18, tỉ số 4:7. Số lớn là:", options:["42","30","28","24"], correct: 0 }
+  ],
+
+  /* ===== TUẦN 5: Héc-ta – Ki-lô-mét vuông – Tỉ lệ bản đồ ===== */
+  week5: [
+    { text: "1 m² = bao nhiêu cm²?", options:["10 000","1 000","100","100 000"], correct: 0 },
+    { text: "1 ha = bao nhiêu m²?", options:["10 000","1 000","100","100 000"], correct: 0 },
+    { text: "1 km² = bao nhiêu ha?", options:["100","10","1000","10000"], correct: 0 },
+    { text: "10 000 m² = bao nhiêu ha?", options:["1 ha","10 ha","0,1 ha","100 ha"], correct: 0 },
+    { text: "Chiều dài bản đồ 5 cm, tỉ lệ 1 : 10 000. Chiều dài thật là:", options:["500 m","50 m","5 km","0,5 km"], correct: 0 },
+    { text: "Tỉ lệ 1 : 2000 nghĩa là 1 cm bản đồ bằng:", options:["2000 cm ngoài thực tế","200 m","20 m","2 m"], correct: 0 },
+    { text: "1 ha bằng bao nhiêu a?", options:["100 a","10 a","1000 a","1 a"], correct: 0 },
+    { text: "1 ha bằng bao nhiêu m²?", options:["100 m²","10 m²","1000 m²","10 000 m²"], correct: 0 },
+    { text: "Một mảnh đất dài 60 m, rộng 40 m. Diện tích là:", options:["2400 m²","2000 m²","2600 m²","400 m²"], correct: 0 },
+    { text: "0,5 ha = ?", options:["5 000 m²","50 m²","500 m²","5 m²"], correct: 0 },
+    { text: "Tỉ lệ bản đồ 1 : 5 000. 1 cm bản đồ ứng với:", options:["50 m","5 m","500 m","0,5 km"], correct: 0 },
+    { text: "Số? ...... × 10 000 = 30 000", options:["3","30","300","3000"], correct: 0 },
+    { text: "Đổi 2,5 ha ra m²:", options:["25 000 m²","250 000 m²","2 500 m²","2500 m²"], correct: 0 },
+    { text: "1 km² = bao nhiêu m²?", options:["1 000 000","100 000","10 000","1 000"], correct: 0 },
+    { text: "Một khu rừng có diện tích 4 ha = ?", options:["40 000 m²","400 m²","4 000 m²","40000 cm²"], correct: 0 },
+    { text: "Số? ...... ÷ 100 = 35", options:["3 500","350","3 000","300"], correct: 0 },
+    { text: "Tỉ lệ bản đồ 1 : 100 000 nghĩa là 1 cm bản đồ bằng:", options:["1 km","10 km","100 km","100 m"], correct: 0 },
+    { text: "Số? ...... + 3000 = 10 000", options:["7 000","8 000","6 000","9 000"], correct: 0 },
+    { text: "Một thửa ruộng 50 m × 20 m = ? ha", options:["0,1 ha","1 ha","0,01 ha","0,2 ha"], correct: 0 }
+]
+};
 /* ================
    UI: generate quiz
    ================ */
@@ -253,12 +552,17 @@ const resetBtn = document.getElementById('resetBtn');
 const scoreText = document.getElementById('scoreText');
 
 let current = { questions: [], answers: [] };
-
+let chatEnabled = false; // 🚫 Chat bị khóa lúc đầu
 function generateWeek(week){
   const key = 'week' + week;
   let source = templates[key] || templates['week1'];
-  const qs = source.map((q, idx) => {
-    // shuffle options while tracking correct
+
+  // --- Lấy ngẫu nhiên 10 câu trong danh sách gốc ---
+  const shuffled = [...source].sort(() => Math.random() - 0.5);
+  const selected = shuffled.slice(0, 10);
+
+  // --- Với mỗi câu, trộn thứ tự đáp án ---
+  const qs = selected.map((q, idx) => {
     const arr = q.options.map((o,i)=>({o,i}));
     for (let i = arr.length -1; i>0; i--){
       const j = Math.floor(Math.random()*(i+1));
@@ -268,10 +572,14 @@ function generateWeek(week){
     const correctIndex = arr.findIndex(x=>x.i === q.correct);
     return { id: idx+1, text: q.text, options, correct: correctIndex };
   });
+
+  // --- Cập nhật dữ liệu hiện hành ---
   current.questions = qs;
   current.answers = new Array(qs.length).fill(null);
   renderQuestions();
   updateScore(0, qs.length);
+
+  // Lưu lại vào localStorage để khi load lại vẫn có đề này
   localStorage.setItem('currentQuiz', JSON.stringify({week, qs}));
 }
 
@@ -348,6 +656,22 @@ function checkAnswers() {
 
   updateScore(correct, current.questions.length);
   alert(`Bạn được ${correct}/${current.questions.length} câu đúng.`);
+  chatEnabled = true; // ✅ Mở khóa chat sau khi học sinh đã chấm xong
+  // ✨ Hiện thông báo tự ẩn sau 3 giây, không cần bấm OK
+const msg = document.createElement('div');
+msg.innerText = 'Giỏi lắm! Bây giờ em có thể hỏi Trợ lý AI để hiểu thêm nhé!';
+msg.style.position = 'fixed';
+msg.style.bottom = '20px';
+msg.style.right = '20px';
+msg.style.background = '#4caf50';
+msg.style.color = '#fff';
+msg.style.padding = '12px 18px';
+msg.style.borderRadius = '8px';
+msg.style.fontWeight = '600';
+msg.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+msg.style.zIndex = '9999';
+document.body.appendChild(msg);
+setTimeout(() => msg.remove(), 3000);
 }
 
 function resetAll(){
@@ -357,6 +681,7 @@ function resetAll(){
   current = {questions:[], answers:[]};
   qListEl.innerHTML = '';
   updateScore(0,0);
+chatEnabled = false;
 }
 
 /* ====================
@@ -375,9 +700,24 @@ window.addEventListener('load', ()=>{
 /* ================
    Event listeners
    ================ */
-genBtn.addEventListener('click', ()=> generateWeek(weekSel.value));
+genBtn.addEventListener('click', ()=>{
+  const saved = JSON.parse(localStorage.getItem('currentQuiz')||'null');
+  if (saved && saved.week === weekSel.value) {
+    alert('Bộ câu hỏi tuần này đã được tạo. Nếu muốn tạo lại ngẫu nhiên, hãy bấm nút Reset.');
+    return;
+  }
+  generateWeek(weekSel.value);
+});
+
 checkBtn.addEventListener('click', checkAnswers);
-resetBtn.addEventListener('click', resetAll);
+
+resetBtn.addEventListener('click', ()=>{
+  if (!confirm('Tạo lại bộ câu hỏi ngẫu nhiên cho tuần này?')) return;
+  localStorage.removeItem('currentQuiz');
+  generateWeek(weekSel.value);
+    chatEnabled = false; // 🚫 Khóa lại chatbox sau khi reset đề
+});
+
 
 /* ======================
    Chat integration (frontend)
@@ -402,33 +742,84 @@ function appendMessage(text, who='assistant'){
 }
 
 sendChat.addEventListener('click', async ()=>{
-  const text = chatText.value.trim();
-  if (!text) return;
+    const text = chatText.value.trim();
+if (!chatEnabled) {
+    alert('Em hãy làm xong bài và bấm "Nộp & Chấm" trước khi hỏi Trợ lý nhé!');
+    return;
+  } 
+ if (!text) return;
   appendMessage(text,'user');
   chatText.value = '';
-  const loadingMsg = 'Đang trả lời...';
-  appendMessage(loadingMsg,'assistant');
+  appendMessage('Đang trả lời...','assistant');
 
   try {
     const resp = await fetch(API_ENDPOINT, {
       method:'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ message: text })
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        message: text,
+        context: current.questions.map(q => ({ id: q.id, text: q.text, options: q.options })),
+        answers: current.answers
+      })
     });
     if (!resp.ok) throw new Error('Không thể kết nối tới server chat.');
     const data = await resp.json();
-    // update last assistant bubble
     const bubbles = chatWindow.querySelectorAll('.msg.assistant .bubble');
     if (bubbles.length) bubbles[bubbles.length-1].innerText = data.reply || 'Xin lỗi, tôi không hiểu.';
     connState.innerText = 'online';
-  } catch(e){
+  } catch(e) {
     const bubbles = chatWindow.querySelectorAll('.msg.assistant .bubble');
     if (bubbles.length) bubbles[bubbles.length-1].innerText = 'Lỗi kết nối: ' + e.message;
     connState.innerText = 'offline';
   }
 });
+/* ---------- Speech to Text (micro) ---------- */
+const voiceBtn = document.getElementById('voiceBtn');
+const voiceStatus = document.getElementById('voiceStatus');
+let recognition = null;
 
-clearChat.addEventListener('click', ()=> chatWindow.innerHTML = '');
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang = 'vi-VN';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    voiceStatus.innerText = '🎙️ Đang nghe...';
+    voiceBtn.style.background = '#0288d1';
+    voiceBtn.style.color = '#fff';
+  };
+  recognition.onend = () => {
+    voiceStatus.innerText = '';
+    voiceBtn.style.background = '';
+    voiceBtn.style.color = '';
+  };
+  recognition.onerror = (e) => {
+    voiceStatus.innerText = 'Lỗi micro: ' + e.error;
+  };
+
+  recognition.onresult = (ev) => {
+    const txt = ev.results[0][0].transcript;
+    const chatTextEl = document.getElementById('chatText');
+    chatTextEl.value = chatTextEl.value ? (chatTextEl.value + ' ' + txt) : txt;
+    chatTextEl.focus();
+  };
+} else {
+  voiceStatus.innerText = 'Trình duyệt không hỗ trợ voice input.';
+  voiceBtn.disabled = true;
+}
+
+voiceBtn.addEventListener('click', () => {
+  if (!recognition) return;
+  try { recognition.start(); } catch(e) {}
+});
+/* ---------- Nút Xóa chat & ô nhập ---------- */
+clearChat.addEventListener('click', ()=>{
+  chatWindow.innerHTML = '';  // Xóa khung hội thoại
+  chatText.value = '';        // Xóa nội dung đang gõ
+  voiceStatus.innerText = ''; // Xóa trạng thái ghi âm nếu có
+});
 async function sendMessage() {
   const input = document.getElementById("chat-input");
   const message = input.value.trim();
@@ -485,4 +876,3 @@ submitBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
-
