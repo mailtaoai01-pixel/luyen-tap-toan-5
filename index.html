@@ -8,7 +8,7 @@
     :root{
   --bg1: #e3f2fd;         /* xanh nhạt */
   --bg2: #bbdefb;         /* xanh lam nhạt */
-  --card: #ffffffcc;       /* trắng trong suốt nhẹ */
+  --card: #ffffffcc;       /* xanh lam đậm */
   --accent: #0288d1;       /* xanh lam đậm */
   --muted: #455a64;        /* xám chữ phụ */
   --glass: rgba(255,255,255,0.6);
@@ -127,10 +127,10 @@ button.primary:hover {
   .option-btn:hover {
     background-color: #333;
   }
-/* ==== Số thứ tự câu hỏi: nền vàng nhạt, số đỏ ==== */
+/* ==== Số thứ tự câu hỏi: nền xanh, số đỏ ==== */
 .q-left {
   min-width: 44px;
-  background: #fff8e1;        /* vàng nhạt dịu mắt */
+  background: #fff8e1;        /* xanh */
   color: #d32f2f;             /* đỏ tươi */
   border-radius: 8px;
   padding: 8px 10px;
@@ -193,16 +193,86 @@ button.primary:hover {
     background-color: #f44336 !important; /* đỏ */
     color: #fff;
   }
-  /* ===== HIỆU ỨNG NỀN ĐỘNG NHẸ ===== */
+ 
+/* ===== NỀN TRẮNG KEM ÁNH VÀNG DỊU NHẸ ===== */
 html, body {
-  background: linear-gradient(120deg, #e3f2fd, #bbdefb, #e3f2fd);
+  background: linear-gradient(120deg, #ffffff, #fffef6, #fffdf0);
   background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
+  animation: gradientMove 25s ease infinite;
+  color: #1a1a1a;
 }
+
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+/* ===== TÙY CHỈNH MÀU NÚT & CÂU HỎI ===== */
+
+/* Màu nút chọn tuần (xanh chuối tươi) */
+button.primary,
+#generateBtn {
+  background: linear-gradient(90deg, #c6ff00, #aeea00);
+  color: #2e3d00;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 3px 8px rgba(173, 255, 47, 0.4);
+  transition: all 0.2s ease;
+}
+button.primary:hover,
+#generateBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 12px rgba(173, 255, 47, 0.6);
+}
+
+/* Nút Reset màu đỏ nhạt */
+#resetBtn {
+  background: linear-gradient(90deg, #ffcdd2, #ef9a9a);
+  color: #7f0000;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 3px 8px rgba(244, 67, 54, 0.25);
+  transition: all 0.2s ease;
+}
+#resetBtn:hover {
+  background: linear-gradient(90deg, #ef9a9a, #e57373);
+  box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+}
+
+/* Câu hỏi in đậm, rõ hơn */
+.question {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+/* ===== Ô CHỌN TUẦN (SELECT) XANH ĐẬM ===== */
+select {
+  background: linear-gradient(90deg, #1976d2, #2196f3);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+select:hover {
+  background: linear-gradient(90deg, #1565c0, #1e88e5);
+  box-shadow: 0 4px 10px rgba(25, 118, 210, 0.4);
+}
+
+/* Khi menu thả xuống (các tuần) mở ra */
+select option {
+  background: #e3f2fd;
+  color: #0d47a1;
+  font-weight: 600;
 }
 
 /* ===== CARD NỔI NHẸ ===== */
