@@ -462,7 +462,9 @@ button.primary:hover {
         <div class="small">   </div>
         <div>
           <span class="score" id="scoreText">Điểm: 0/0</span>
+     
 		  <button id="checkBtn" class="primary" onclick="finishAndSend()">Nộp & Chấm</button>
+
         </div>
       </div>
     </main>
@@ -504,16 +506,6 @@ button.primary:hover {
     <div class="small" id="voiceStatus"></div>
   </div>
 </div>
-<form id="realForm"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSeAk3aJEjS6gFc_qZWDg1prG0Cn2Szgl-7ugsFfZwhQ9zybzQ/formResponse"
-      method="POST" style="display:none">
-
-  <input name="entry.112863490" id="f_name">
-  <input name="entry.1116837335" id="f_week">
-  <input name="entry.1401901485" id="f_answers">
-  <input name="entry.1403609350" id="f_score">
-
-</form>
 
 
 
@@ -2096,7 +2088,7 @@ function sendToGoogleForms(name, answers, score, week) {
   formData.append("entry.112863490", name);      // Tên học sinh
   formData.append("entry.1116837335", week);      // Tuần
   formData.append("entry.1401901485", answers);   // Câu trả lời
-  formData.append("entry.1403609350", score);     // Điểm
+  formData.append("entry.1403069350", score);     // Điểm
 
   fetch(formURL, {
     method: "POST",
@@ -2171,19 +2163,11 @@ function updateScore(correct, total){
   scoreText.innerText = `Điểm: ${correct}/${total}`;
 }
 
-function checkAnswers(){
-  let correct = 0;
-  current.questions.forEach((q, i) => {
-    if (current.answers[i] === q.correct) correct++;
-  });
-  updateScore(correct, current.questions.length);
-  const wk = weekSel.value;
-  const history = JSON.parse(localStorage.getItem('history')||'{}');
-  history['week'+wk] = { timestamp: Date.now(), score: correct, total: current.questions.length };
-  localStorage.setItem('history', JSON.stringify(history));
-  alert(`Bạn được ${correct}/${current.questions.length} câu đúng.`);
-}
+
 function checkAnswers() {
+  const studentName = document.getElementById('studentName').value.trim();
+  if (!studentName) return alert("Hãy nhập tên trước khi nộp."); // ✅ kiểm tra trước
+
   let correct = 0;
 
   current.questions.forEach((q, i) => {
@@ -2209,16 +2193,37 @@ function checkAnswers() {
   });
 
   updateScore(correct, current.questions.length);
-  updateScore(correct, current.questions.length);
+
 
 // ===== Gửi dữ liệu lên Google Form =====
-const studentName = document.getElementById('studentName').value.trim();
-if (!studentName) return alert("Hãy nhập tên trước khi nộp.");
-
 const week = weekSel.value;
 const answersText = current.answers.map(i => i !== null ? String.fromCharCode(65+i) : "-").join(", ");
 
-sendToGoogleForm(studentName, week, answersText, correct);
+function sendToForm() {
+    const name = document.getElementById("studentName").value.trim();
+    const week = document.getElementById("week").value;
+    const score = document.getElementById("scoreText").innerText.replace("Điểm: ", "");
+
+    if (!name) {
+        return;
+    }
+
+    // Gửi vào các input ẩn
+    document.getElementById("f_name").value = name;
+    document.getElementById("f_week").value = "Tuần " + week;
+    document.getElementById("f_score").value = score;
+
+    // Submit form
+    document.getElementById("realForm").submit();
+
+}
+sendToGoogleForms(studentName, answersText, correct, week);
+function finishAndSend() {
+    checkAnswers();     // Chấm điểm
+    sendToForm();       // Gửi về Google Form
+}
+
+
 
   alert(`Bạn được ${correct}/${current.questions.length} câu đúng.`);
   chatEnabled = true; // ✅ Mở khóa chat sau khi học sinh đã chấm xong
@@ -2338,30 +2343,6 @@ if (!chatEnabled) {
     connState.innerText = 'offline';
   }
 });
-function sendToForm() {
-    const name = document.getElementById("studentName").value.trim();
-    const week = document.getElementById("week").value;
-    const score = document.getElementById("scoreText").innerText.replace("Điểm: ", "");
-
-    if (!name) {
-        alert("Em hãy nhập họ và tên trước khi nộp!");
-        return;
-    }
-
-    // Gửi vào các input ẩn
-    document.getElementById("f_name").value = name;
-    document.getElementById("f_week").value = "Tuần " + week;
-    document.getElementById("f_score").value = score;
-
-    // Submit form
-    document.getElementById("realForm").submit();
-}
-function finishAndSend() {
-    checkAnswers();     // Hàm chấm điểm bạn có sẵn
-    sendToForm();       // Hàm gửi đi Google Form
-}
-
-
 /* ---------- Speech to Text (micro) ---------- */
 const voiceBtn = document.getElementById('voiceBtn');
 const voiceStatus = document.getElementById('voiceStatus');
