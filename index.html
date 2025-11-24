@@ -2084,18 +2084,22 @@ const ENTRY_NAME = "entry.112863490";    // Tên học sinh
 const ENTRY_WEEK = "entry.1116837335";   // Tuần
 const ENTRY_ANSWERS = "entry.1401901485"; // Các đáp án học sinh
 const ENTRY_SCORE = "entry.1403069350";   // Điểm
-function sendToGoogleForm(studentName, week, answersText, score){
-    const data = new URLSearchParams();
-    data.append(ENTRY_NAME, studentName);
-    data.append(ENTRY_WEEK, week);
-    data.append(ENTRY_ANSWERS, answersText);
-    data.append(ENTRY_SCORE, score);
 
-    fetch(FORM_URL, { method: "POST", body: data, mode: "no-cors" })
-      .then(() => console.log("Gửi thành công"))
-      .catch(err => console.error("Lỗi gửi form:", err));
+function sendToGoogleForms(name, answers, score, week) {
+  const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSeAk3aJEjS6gFc_qZWDg1prG0Cn2Szgl-7ugsFfZwhQ9zybzQ/formResponse";
+
+  const formData = new FormData();
+  formData.append("entry.112863490", name);      // Tên học sinh
+  formData.append("entry.1116837335", week);      // Tuần
+  formData.append("entry.1401901485", answers);   // Câu trả lời
+  formData.append("entry.1403609350", score);     // Điểm
+
+  fetch(formURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
+  });
 }
-
 
 let current = { questions: [], answers: [] };
 let chatEnabled = false; // 🚫 Chat bị khóa lúc đầu
